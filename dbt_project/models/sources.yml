@@ -1,0 +1,11 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: bronze
+    tables:
+      - name: bronze_sales
+      - name: bronze_suppliers
+      - name: bronze_shipments
+      - name: bronze_orders
+      - name: bronze_inventory

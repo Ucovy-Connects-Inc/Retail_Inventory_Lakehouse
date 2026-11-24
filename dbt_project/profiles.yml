@@ -1,0 +1,13 @@
+inventory_lakehouse:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      user: "{{ env_var('POSTGRES_USER', 'postgres') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD') }}"
+      port: 5432
+      dbname: "{{ env_var('POSTGRES_DB', 'inventory_lakehouse') }}"
+      schema: silver
+      threads: 4
+      keepalives_idle: 0

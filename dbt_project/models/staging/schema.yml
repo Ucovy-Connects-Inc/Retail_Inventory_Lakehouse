@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: stg_sales
+    description: "Staging model for sales transactions from Dataset A (atomicd)"
+    tests:
+      - unique_combination_of_columns:
+          combination_of_columns:
+            - date
+            - store_id
+            - product_id
+    columns:
+      - name: date
+        tests:
+          - not_null
+      - name: store_id
+        tests:
+          - not_null
+      - name: product_id
+        tests:
+          - not_null
+      - name: inventory_level
+        tests:
+          - not_null
+          - non_negative
+      - name: units_sold
+        tests:
+          - non_negative
+      - name: units_ordered
+        tests:
+          - non_negative
+      - name: price
+        tests:
+          - positive
+
+  - name: stg_suppliers
+    description: "Staging model for supplier master records from Dataset B"
+    columns:
+      - name: supplier_id
+        tests:
+          - not_null
+          - unique
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['Active', 'Inactive']
+
+  - name: stg_shipments
+    description: "Staging model for logistics shipments from Dataset B"
+    columns:
+      - name: shipment_id
+        tests:
+          - not_null
+          - unique
+      - name: shipment_status
+        tests:
+          - accepted_values:
+              values: ['Delivered', 'Delayed', 'In Transit', 'Out for Delivery', 'Returned', 'Lost']
+
+  - name: stg_orders
+    description: "Staging model for customer purchase orders from Dataset B"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['Cancelled', 'Delivered', 'Pending', 'Processing', 'Returned', 'Shipped']
+
+  - name: stg_inventory
+    description: "Staging model for warehouse inventory snapshots from Dataset B"
+    columns:
+      - name: inventory_id
+        tests:
+          - not_null
+          - unique
+      - name: available_stock
+        tests:
+          - not_null
+          - non_negative
+      - name: inventory_status
+        tests:
+          - accepted_values:
+              values: ['In Stock', 'Low Stock', 'Out of Stock', 'Overstock']
